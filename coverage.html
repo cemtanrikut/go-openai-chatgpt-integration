@@ -55,15 +55,15 @@
 			<div id="nav">
 				<select id="files">
 				
-				<option value="file0">github.com/cemtanrikut/go-openai-chatgpt-integration/config/config.go (60.0%)</option>
+				<option value="file0">github.com/cemtanrikut/go-openai-chatgpt-integration/config/config.go (66.7%)</option>
 				
 				<option value="file1">github.com/cemtanrikut/go-openai-chatgpt-integration/handler/chat_handler.go (0.0%)</option>
 				
 				<option value="file2">github.com/cemtanrikut/go-openai-chatgpt-integration/main.go (0.0%)</option>
 				
-				<option value="file3">github.com/cemtanrikut/go-openai-chatgpt-integration/service/openai_service.go (0.0%)</option>
+				<option value="file3">github.com/cemtanrikut/go-openai-chatgpt-integration/service/openai_service.go (88.5%)</option>
 				
-				<option value="file4">github.com/cemtanrikut/go-openai-chatgpt-integration/utils/response.go (0.0%)</option>
+				<option value="file4">github.com/cemtanrikut/go-openai-chatgpt-integration/utils/response.go (100.0%)</option>
 				
 				</select>
 			</div>
@@ -88,13 +88,14 @@ import (
 
 func LoadEnv() <span class="cov8" title="1">{
         err := godotenv.Load()
-        if err != nil </span><span class="cov0" title="0">{
+        if err != nil </span><span class="cov8" title="1">{
                 log.Println("No .env file found. Using system environment variables.")
         }</span>
 
         <span class="cov8" title="1">if os.Getenv("OPENAI_API_KEY") == "" </span><span class="cov0" title="0">{
                 log.Fatal("OPENAI_API_KEY is not set")
-        }</span>
+                panic("Missing required environment variable: OPENAI_API_KEY")</span>
+        }
 }
 </pre>
 		
@@ -173,45 +174,59 @@ type OpenAIResponse struct {
         } `json:"choices"`
 }
 
-func GetChatResponse(prompt string) (string, error) <span class="cov0" title="0">{
-        openAIReq := OpenAIRequest{
+func GetChatResponse(prompt string) (string, error) <span class="cov8" title="1">{
+        // Fetch API URL and API Key from environment variables
+        apiURL := os.Getenv("OPENAI_API_URL")
+        if apiURL == "" </span><span class="cov8" title="1">{
+                return "", errors.New("OPENAI_API_URL is not set")
+        }</span>
+
+        <span class="cov8" title="1">apiKey := os.Getenv("OPENAI_API_KEY")
+        if apiKey == "" </span><span class="cov8" title="1">{
+                return "", errors.New("OPENAI_API_KEY is not set")
+        }</span>
+
+        // Prepare the OpenAI API request payload
+        <span class="cov8" title="1">requestBody, err := json.Marshal(OpenAIRequest{
                 Model: "gpt-4",
                 Messages: []map[string]string{
                         {"role": "user", "content": prompt},
                 },
-        }
-
-        reqBody, err := json.Marshal(openAIReq)
+        })
         if err != nil </span><span class="cov0" title="0">{
                 return "", err
         }</span>
 
-        <span class="cov0" title="0">client := &amp;http.Client{}
-        req, err := http.NewRequest("POST", os.Getenv("OPENAI_API_URL"), bytes.NewBuffer(reqBody))
-        if err != nil </span><span class="cov0" title="0">{
+        // Create the HTTP request
+        <span class="cov8" title="1">req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer(requestBody))
+        if err != nil </span><span class="cov8" title="1">{
                 return "", err
         }</span>
-
-        <span class="cov0" title="0">req.Header.Set("Authorization", "Bearer "+os.Getenv("OPENAI_API_KEY"))
+        <span class="cov8" title="1">req.Header.Set("Authorization", "Bearer "+apiKey)
         req.Header.Set("Content-Type", "application/json")
 
+        // Perform the HTTP request
+        client := &amp;http.Client{}
         resp, err := client.Do(req)
         if err != nil </span><span class="cov0" title="0">{
                 return "", err
         }</span>
-        <span class="cov0" title="0">defer resp.Body.Close()
+        <span class="cov8" title="1">defer resp.Body.Close()
 
+        // Check for HTTP errors
         if resp.StatusCode != http.StatusOK </span><span class="cov0" title="0">{
                 return "", errors.New("OpenAI API error")
         }</span>
 
-        <span class="cov0" title="0">var openAIResp OpenAIResponse
+        // Parse the OpenAI API response
+        <span class="cov8" title="1">var openAIResp OpenAIResponse
         err = json.NewDecoder(resp.Body).Decode(&amp;openAIResp)
-        if err != nil </span><span class="cov0" title="0">{
+        if err != nil </span><span class="cov8" title="1">{
                 return "", err
         }</span>
 
-        <span class="cov0" title="0">return openAIResp.Choices[0].Message.Content, nil</span>
+        // Return the response content
+        <span class="cov8" title="1">return openAIResp.Choices[0].Message.Content, nil</span>
 }
 </pre>
 		
@@ -222,12 +237,12 @@ import (
         "net/http"
 )
 
-func SendJSON(w http.ResponseWriter, data interface{}) <span class="cov0" title="0">{
+func SendJSON(w http.ResponseWriter, data interface{}) <span class="cov8" title="1">{
         w.Header().Set("Content-Type", "application/json")
         json.NewEncoder(w).Encode(data)
 }</span>
 
-func SendError(w http.ResponseWriter, message string, code int) <span class="cov0" title="0">{
+func SendError(w http.ResponseWriter, message string, code int) <span class="cov8" title="1">{
         w.Header().Set("Content-Type", "application/json")
         w.WriteHeader(code)
         json.NewEncoder(w).Encode(map[string]string{"error": message})
