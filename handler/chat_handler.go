@@ -3,25 +3,28 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
-
-	"github.com/cemtanrikut/go-openai-chatgpt-integration/model"
-	"github.com/cemtanrikut/go-openai-chatgpt-integration/service"
-	"github.com/cemtanrikut/go-openai-chatgpt-integration/utils"
 )
 
-func ChatHandler(w http.ResponseWriter, r *http.Request) {
-	var chatReq model.ChatRequest
+type ChatHandler struct {
+	GetChatResponseFunc func(prompt string) (string, error)
+}
+
+func (h ChatHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	var chatReq struct {
+		Prompt string `json:"prompt"`
+	}
 	err := json.NewDecoder(r.Body).Decode(&chatReq)
 	if err != nil {
-		utils.SendError(w, "Invalid request", http.StatusBadRequest)
+		http.Error(w, "Invalid request", http.StatusBadRequest)
 		return
 	}
 
-	response, err := service.GetChatResponse(chatReq.Prompt)
+	response, err := h.GetChatResponseFunc(chatReq.Prompt)
 	if err != nil {
-		utils.SendError(w, "Error communicating with OpenAI", http.StatusInternalServerError)
+		http.Error(w, "Error communicating with OpenAI", http.StatusInternalServerError)
 		return
 	}
 
-	utils.SendJSON(w, map[string]string{"response": response})
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]string{"response": response})
 }
