@@ -37,7 +37,7 @@ jobs:
 
     - name: Run tests
       env:
-        OPENAI_API_KEY: "your_api_key"
+        OPENAI_API_KEY: "test_key"
         OPENAI_API_URL: "https://api.openai.com/v1/chat/completions"
       run: go test ./... -v
 
