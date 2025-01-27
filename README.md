@@ -13,7 +13,7 @@ The project maintains a high test coverage for all key components:
 - config/: 100% coverage
 - utils/: 100% coverage
 
-Overall test coverage is 98%.
+Overall test coverage is **98%**.
 
 ## Features
 
