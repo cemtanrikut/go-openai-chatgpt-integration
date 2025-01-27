@@ -15,5 +15,6 @@ func LoadEnv() {
 
 	if os.Getenv("OPENAI_API_KEY") == "" {
 		log.Fatal("OPENAI_API_KEY is not set")
+		panic("Missing required environment variable: OPENAI_API_KEY")
 	}
 }
