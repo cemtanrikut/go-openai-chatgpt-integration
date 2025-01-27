@@ -70,3 +70,15 @@ func TestChatRequestValidation(t *testing.T) {
 		}
 	}
 }
+
+func TestChatRequestIsValid(t *testing.T) {
+	validRequest := ChatRequest{Prompt: "Hello"}
+	if !validRequest.IsValid() {
+		t.Error("Expected valid request to be valid")
+	}
+
+	invalidRequest := ChatRequest{Prompt: ""}
+	if invalidRequest.IsValid() {
+		t.Error("Expected invalid request to be invalid")
+	}
+}

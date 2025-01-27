@@ -59,7 +59,7 @@
 				
 				<option value="file1">github.com/cemtanrikut/go-openai-chatgpt-integration/handler/chat_handler.go (100.0%)</option>
 				
-				<option value="file2">github.com/cemtanrikut/go-openai-chatgpt-integration/main.go (0.0%)</option>
+				<option value="file2">github.com/cemtanrikut/go-openai-chatgpt-integration/model/chat_request.go (100.0%)</option>
 				
 				<option value="file3">github.com/cemtanrikut/go-openai-chatgpt-integration/service/openai_service.go (88.5%)</option>
 				
@@ -131,32 +131,15 @@ func (h ChatHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) <span cla
 }
 </pre>
 		
-		<pre class="file" id="file2" style="display: none">package main
+		<pre class="file" id="file2" style="display: none">package model
 
-import (
-        "log"
-        "net/http"
+type ChatRequest struct {
+        Prompt string `json:"prompt" validate:"required"`
+}
 
-        "github.com/cemtanrikut/go-openai-chatgpt-integration/config"
-        "github.com/cemtanrikut/go-openai-chatgpt-integration/handler"
-        "github.com/cemtanrikut/go-openai-chatgpt-integration/service"
-)
-
-func main() <span class="cov0" title="0">{
-        // Load environment variables
-        config.LoadEnv()
-
-        // Create an instance of ChatHandler with the actual GetChatResponse function
-        chatHandler := handler.ChatHandler{
-                GetChatResponseFunc: service.GetChatResponse,
-        }
-
-        // Define routes
-        http.Handle("/chat", chatHandler)
-
-        // Start the server
-        log.Println("Server running on port 8080")
-        log.Fatal(http.ListenAndServe(":8080", nil))
+// Add a method to the ChatRequest struct
+func (c *ChatRequest) IsValid() bool <span class="cov8" title="1">{
+        return c.Prompt != ""
 }</span>
 </pre>
 		
