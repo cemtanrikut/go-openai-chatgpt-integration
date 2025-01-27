@@ -29,6 +29,12 @@ jobs:
     - name: Install dependencies
       run: go mod tidy
 
+    - name: Set environment variables from .env
+      run: |
+        if [ -f .env ]; then
+        export $(cat .env | xargs)
+        fi
+
     # 4. Run tests and generate coverage report
     - name: Run tests with coverage
       run: go test ./... -coverprofile=coverage.out
