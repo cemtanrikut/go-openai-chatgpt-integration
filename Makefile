@@ -14,12 +14,14 @@ ENV_FILE = .env
 .PHONY: help
 help:
 	@echo "Available commands:"
-	@echo "  make build        - Build the application"
-	@echo "  make run          - Run the application"
-	@echo "  make test         - Run tests"
-	@echo "  make lint         - Run code linting"
-	@echo "  make tidy         - Tidy up dependencies"
-	@echo "  make clean        - Clean build files"
+	@echo "  make build        		- Build the application"
+	@echo "  make run          		- Run the application"
+	@echo "  make test				- Run tests"
+	@echo "  make coverage			- Generate test coverage report"
+	@echo "  make coverage-html		- Generate HTML test coverage report"
+	@echo "  make lint         		- Run code linting"
+	@echo "  make tidy         		- Tidy up dependencies"
+	@echo "  make clean        		- Clean build files"
 
 # Build the application
 .PHONY: build
@@ -38,6 +40,19 @@ run:
 .PHONY: test
 test:
 	$(GO) test ./... -v
+
+
+# Generate test coverage report
+.PHONY: coverage
+coverage:
+	$(GO) test ./... -coverprofile=coverage.out
+
+# Generate HTML test coverage report
+.PHONY: coverage-html
+coverage-html: coverage
+	$(GO) tool cover -html=coverage.out -o coverage.html
+	@echo "HTML coverage report generated at coverage.html"
+
 
 # Lint the code (e.g., using golangci-lint)
 .PHONY: lint
