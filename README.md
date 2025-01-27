@@ -1,13 +1,12 @@
 # Go OpenAI ChatGPT Integration
 
+[![codecov](https://codecov.io/github/cemtanrikut/go-openai-chatgpt-integration/graph/badge.svg?token=7GZTTEO118)](https://codecov.io/github/cemtanrikut/go-openai-chatgpt-integration)
+
 A simple REST API built with Go that integrates with OpenAI's ChatGPT API to process user prompts and return AI-generated responses.
 
 ---
 
 ## Test Coverage Summary
-
-[![codecov](https://codecov.io/github/cemtanrikut/go-openai-chatgpt-integration/graph/badge.svg?token=7GZTTEO118)](https://codecov.io/github/cemtanrikut/go-openai-chatgpt-integration)
-
 
 The project maintains a high test coverage for all key components:
 
