@@ -34,6 +34,6 @@ jobs:
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }} # Codecov Token
+        slug: cemtanrikut/go-openai-chatgpt-integration
         files: coverage.out                 # Coverage report file
         flags: unittests                    # Optional flag for distinguishing report types
-        slug: cemtanrikut/go-openai-chatgpt-integration
