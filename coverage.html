@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>config: Go Coverage Report</title>
+		<title>handler: Go Coverage Report</title>
 		<style>
 			body {
 				background: black;
@@ -55,15 +55,13 @@
 			<div id="nav">
 				<select id="files">
 				
-				<option value="file0">github.com/cemtanrikut/go-openai-chatgpt-integration/config/config.go (66.7%)</option>
+				<option value="file0">github.com/cemtanrikut/go-openai-chatgpt-integration/handler/chat_handler.go (100.0%)</option>
 				
-				<option value="file1">github.com/cemtanrikut/go-openai-chatgpt-integration/handler/chat_handler.go (100.0%)</option>
+				<option value="file1">github.com/cemtanrikut/go-openai-chatgpt-integration/model/chat_request.go (100.0%)</option>
 				
-				<option value="file2">github.com/cemtanrikut/go-openai-chatgpt-integration/model/chat_request.go (100.0%)</option>
+				<option value="file2">github.com/cemtanrikut/go-openai-chatgpt-integration/service/openai_service.go (88.5%)</option>
 				
-				<option value="file3">github.com/cemtanrikut/go-openai-chatgpt-integration/service/openai_service.go (88.5%)</option>
-				
-				<option value="file4">github.com/cemtanrikut/go-openai-chatgpt-integration/utils/response.go (100.0%)</option>
+				<option value="file3">github.com/cemtanrikut/go-openai-chatgpt-integration/utils/response.go (100.0%)</option>
 				
 				</select>
 			</div>
@@ -77,29 +75,7 @@
 		</div>
 		<div id="content">
 		
-		<pre class="file" id="file0" style="display: none">package config
-
-import (
-        "log"
-        "os"
-
-        "github.com/joho/godotenv"
-)
-
-func LoadEnv() <span class="cov8" title="1">{
-        err := godotenv.Load()
-        if err != nil </span><span class="cov8" title="1">{
-                log.Println("No .env file found. Using system environment variables.")
-        }</span>
-
-        <span class="cov8" title="1">if os.Getenv("OPENAI_API_KEY") == "" </span><span class="cov0" title="0">{
-                log.Fatal("OPENAI_API_KEY is not set")
-                panic("Missing required environment variable: OPENAI_API_KEY")</span>
-        }
-}
-</pre>
-		
-		<pre class="file" id="file1" style="display: none">package handler
+		<pre class="file" id="file0" style="display: none">package handler
 
 import (
         "encoding/json"
@@ -131,7 +107,7 @@ func (h ChatHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) <span cla
 }
 </pre>
 		
-		<pre class="file" id="file2" style="display: none">package model
+		<pre class="file" id="file1" style="display: none">package model
 
 type ChatRequest struct {
         Prompt string `json:"prompt" validate:"required"`
@@ -143,7 +119,7 @@ func (c *ChatRequest) IsValid() bool <span class="cov8" title="1">{
 }</span>
 </pre>
 		
-		<pre class="file" id="file3" style="display: none">package service
+		<pre class="file" id="file2" style="display: none">package service
 
 import (
         "bytes"
@@ -222,7 +198,7 @@ func GetChatResponse(prompt string) (string, error) <span class="cov8" title="1"
 }
 </pre>
 		
-		<pre class="file" id="file4" style="display: none">package utils
+		<pre class="file" id="file3" style="display: none">package utils
 
 import (
         "encoding/json"

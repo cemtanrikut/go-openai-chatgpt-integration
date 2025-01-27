@@ -1,8 +1,4 @@
 mode: set
-github.com/cemtanrikut/go-openai-chatgpt-integration/config/config.go:10.16,12.16 2 1
-github.com/cemtanrikut/go-openai-chatgpt-integration/config/config.go:12.16,14.3 1 1
-github.com/cemtanrikut/go-openai-chatgpt-integration/config/config.go:16.2,16.39 1 1
-github.com/cemtanrikut/go-openai-chatgpt-integration/config/config.go:16.39,18.65 2 0
 github.com/cemtanrikut/go-openai-chatgpt-integration/handler/chat_handler.go:12.72,17.16 3 1
 github.com/cemtanrikut/go-openai-chatgpt-integration/handler/chat_handler.go:17.16,20.3 2 1
 github.com/cemtanrikut/go-openai-chatgpt-integration/handler/chat_handler.go:22.2,23.16 2 1
