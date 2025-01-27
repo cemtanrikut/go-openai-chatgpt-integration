@@ -6,6 +6,9 @@ A simple REST API built with Go that integrates with OpenAI's ChatGPT API to pro
 
 ## Test Coverage Summary
 
+[![Coverage](https://codecov.io/gh/cemtanrikut/go-openapi-chatgpt-integration/branch/main/graph/badge.svg)](https://codecov.io/gh/cemtanrikut/go-openai-chatgpt-integration)
+
+
 The project maintains a high test coverage for all key components:
 
 - handlers/: 100% coverage

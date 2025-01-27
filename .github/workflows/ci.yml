@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Check out the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # 2. Set up Go environment
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: 1.20
+
+    # 3. Install dependencies
+    - name: Install dependencies
+      run: go mod tidy
+
+    # 4. Run tests and generate coverage report
+    - name: Run tests with coverage
+      run: go test ./... -coverprofile=coverage.out
+
+    # 5. Upload coverage reports to Codecov
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }} # Codecov Token
+        files: coverage.out                 # Coverage report file
+        flags: unittests                    # Optional flag for distinguishing report types
+        slug: cemtanrikut/go-openai-chatgpt-integration
